@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^16.0.0",
     "tailwindcss": "^3.4.12"
   }
 }
