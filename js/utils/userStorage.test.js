@@ -1,5 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach } from 'vitest';
-import { saveUser, getUsername, clearStorage } from './userStorage';
+import { saveUser, getUsername, clearStorage } from './storage';
 
 describe('getUsername', () => {
   beforeEach(() => {
