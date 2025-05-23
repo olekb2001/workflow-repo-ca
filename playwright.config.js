@@ -1,8 +1,11 @@
 // playwright.config.js
-const { defineConfig } = require('@playwright/test');
-require('dotenv').config();
+import { defineConfig } from '@playwright/test';
+import dotenv from 'dotenv';
 
-module.exports = defineConfig({
+dotenv.config();
+
+export default defineConfig({
+  testDir: './tests',
   use: {
     baseURL: process.env.BASE_URL || 'http://127.0.0.1:5500/',
   },
