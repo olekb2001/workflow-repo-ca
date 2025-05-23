@@ -1,16 +1,22 @@
 # Test info
 
 - Name: User sees error with invalid credentials
-- Location: C:\Users\olkb2\workflow-repo-ca\tests\login.spec.js:18:5
+- Location: C:\Users\olkb2\workflow-repo-ca\tests\login.spec.js:19:5
 
 # Error details
 
 ```
-Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5500//login.html
+Error: page.fill: Test timeout of 30000ms exceeded.
 Call log:
-  - navigating to "http://127.0.0.1:5500//login.html", waiting until "load"
+  - waiting for locator('input[name="email"]')
 
-    at C:\Users\olkb2\workflow-repo-ca\tests\login.spec.js:19:14
+    at C:\Users\olkb2\workflow-repo-ca\tests\login.spec.js:22:14
+```
+
+# Page snapshot
+
+```yaml
+- text: Cannot GET /login.html
 ```
 
 # Test source
@@ -26,21 +32,23 @@ Call log:
    8 |
    9 | test('User can log in with valid credentials', async ({ page }) => {
   10 |   await page.goto(`${BASE_URL}/login.html`);
-  11 |   await page.fill('input[name="email"]', LOGIN_USERNAME);
-  12 |   await page.fill('input[name="password"]', LOGIN_PASSWORD);
-  13 |   await page.click('button[type="submit"]');
-  14 |
-  15 |   await expect(page.locator('text=Welcome')).toBeVisible();
-  16 | });
-  17 |
-  18 | test('User sees error with invalid credentials', async ({ page }) => {
-> 19 |   await page.goto(`${BASE_URL}/login.html`);
-     |              ^ Error: page.goto: net::ERR_CONNECTION_REFUSED at http://127.0.0.1:5500//login.html
-  20 |   await page.fill('input[name="email"]', 'wrong@example.com');
-  21 |   await page.fill('input[name="password"]', 'wrongpassword');
-  22 |   await page.click('button[type="submit"]');
-  23 |
-  24 |   await expect(page.locator('text=Invalid email or password')).toBeVisible();
-  25 | });
-  26 |
+  11 |
+  12 |   await page.fill('input[name="email"]', LOGIN_USERNAME);
+  13 |   await page.fill('input[name="password"]', LOGIN_PASSWORD);
+  14 |   await page.click('button[type="submit"]');
+  15 |
+  16 |   await expect(page.locator('text=Welcome')).toBeVisible({ timeout: 5000 });
+  17 | });
+  18 |
+  19 | test('User sees error with invalid credentials', async ({ page }) => {
+  20 |   await page.goto(`${BASE_URL}/login.html`);
+  21 |
+> 22 |   await page.fill('input[name="email"]', 'wrong@example.com');
+     |              ^ Error: page.fill: Test timeout of 30000ms exceeded.
+  23 |   await page.fill('input[name="password"]', 'wrongpassword');
+  24 |   await page.click('button[type="submit"]');
+  25 |
+  26 |   await expect(page.locator('#message-container')).toContainText('noroff.no');
+  27 | });
+  28 |
 ```

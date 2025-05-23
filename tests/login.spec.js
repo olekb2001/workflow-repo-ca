@@ -1,4 +1,3 @@
-// tests/login.spec.js
 import { test, expect } from '@playwright/test';
 import dotenv from 'dotenv';
 
@@ -7,7 +6,7 @@ dotenv.config();
 const { LOGIN_USERNAME, LOGIN_PASSWORD, BASE_URL } = process.env;
 
 test('User can log in with valid credentials', async ({ page }) => {
-  await page.goto(`${BASE_URL}/login.html`);
+  await page.goto(`${BASE_URL}/login/`);
 
   await page.fill('input[name="email"]', LOGIN_USERNAME);
   await page.fill('input[name="password"]', LOGIN_PASSWORD);
@@ -17,7 +16,7 @@ test('User can log in with valid credentials', async ({ page }) => {
 });
 
 test('User sees error with invalid credentials', async ({ page }) => {
-  await page.goto(`${BASE_URL}/login.html`);
+  await page.goto(`${BASE_URL}/login/`);
 
   await page.fill('input[name="email"]', 'wrong@example.com');
   await page.fill('input[name="password"]', 'wrongpassword');
